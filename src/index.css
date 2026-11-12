@@ -1,0 +1,85 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Figtree", "Figtree Fallback", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-figtree: "Figtree", "Figtree Fallback", sans-serif;
+}
+
+@layer base {
+  :root,
+  html,
+  :host {
+    --font-figtree: "Figtree", "Figtree Fallback", sans-serif;
+    --default-font-feature-settings: normal;
+    --default-font-variation-settings: normal;
+    font-family: var(--font-figtree, "Figtree"), sans-serif;
+    font-feature-settings: var(--default-font-feature-settings, normal);
+    font-variation-settings: var(--default-font-variation-settings, normal);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body,
+  .font-text {
+    font-family: var(--font-figtree, "Figtree"), "Figtree Fallback", sans-serif;
+    font-feature-settings: normal;
+    font-variation-settings: normal;
+    -webkit-font-smoothing: antialiased;
+    background-color: #061116;
+    color: #F1F5F9;
+    overflow-x: hidden;
+  }
+
+  .font-mono-num {
+    font-family: var(--font-figtree, "Figtree"), "Figtree Fallback", sans-serif;
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Custom subtle scrollbars for Housebets dark shell */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #061116;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #173340;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #234B5E;
+}
+
+@keyframes oddsFlashUp {
+  0% {
+    background-color: rgba(16, 185, 129, 0.35);
+    border-color: rgba(16, 185, 129, 0.8);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+@keyframes oddsFlashDown {
+  0% {
+    background-color: rgba(244, 63, 94, 0.35);
+    border-color: rgba(244, 63, 94, 0.8);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.odds-flash-up {
+  animation: oddsFlashUp 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.odds-flash-down {
+  animation: oddsFlashDown 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+}

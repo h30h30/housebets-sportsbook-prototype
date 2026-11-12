@@ -1,0 +1,6 @@
+{
+  "name": "Housebets Sportsbook Prototype",
+  "description": "High-craft clickable sportsbook prototype for Housebets featuring Sports Home, Live, Football, Match Page, and unified USDT Singles Bet Slip + My Bets with full edge-state simulation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
