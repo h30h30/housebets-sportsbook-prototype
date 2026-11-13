@@ -1324,6 +1324,7 @@ export default function App() {
                       onToggleFollowCompetition={handleToggleFollowCompetition}
                       onSimulateOddsMovement={handleSimulateOddsMovement}
                       onToggleMarketSuspend={handleToggleMarketSuspend}
+                      showJudgeControls={judgeDrawerOpen}
                     />
                   )}
 

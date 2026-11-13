@@ -35,6 +35,7 @@ interface MatchPageViewProps {
   onToggleFollowCompetition: (comp: string) => void;
   onSimulateOddsMovement: () => void;
   onToggleMarketSuspend: (matchId: string, marketId: string) => void;
+  showJudgeControls?: boolean;
 }
 
 const SEARCH_PLACEHOLDERS: Record<SportId, string> = {
@@ -59,6 +60,7 @@ export const MatchPageView: React.FC<MatchPageViewProps> = ({
   onToggleFollowCompetition,
   onSimulateOddsMovement,
   onToggleMarketSuspend,
+  showJudgeControls = false,
 }) => {
   const [activeGroup, setActiveGroup] = useState<MarketGroupId>('popular');
   const [marketSearch, setMarketSearch] = useState('');
@@ -369,18 +371,20 @@ export const MatchPageView: React.FC<MatchPageViewProps> = ({
           </div>
         </div>
 
-        {/* Interactive Match State Simulator Controls */}
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={onSimulateOddsMovement}
-            className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#0C1E26] border border-[#173340] hover:border-[#2CE5FF] text-[11px] font-semibold text-[#2CE5FF] transition-colors"
-            title="Move live odds up/down and trigger Bet Slip odds change state"
-          >
-            <Zap className="w-3.5 h-3.5" />
-            <span>Simulate Live Odds Drift</span>
-          </button>
-        </div>
+        {/* Interactive Match State Simulator Controls (Visible only in Judge Mode) */}
+        {showJudgeControls && (
+          <div className="flex items-center gap-1.5">
+            <button
+              type="button"
+              onClick={onSimulateOddsMovement}
+              className="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-[#0C1E26] border border-[#173340] hover:border-[#2CE5FF] text-[11px] font-semibold text-[#2CE5FF] transition-colors"
+              title="Move live odds up/down and trigger Bet Slip odds change state"
+            >
+              <Zap className="w-3.5 h-3.5" />
+              <span>Simulate Live Odds Drift</span>
+            </button>
+          </div>
+        )}
       </div>
 
       {/* Live Scoreboard Banner (matches desk-match.webp & phone-match.webp) */}
@@ -584,31 +588,33 @@ export const MatchPageView: React.FC<MatchPageViewProps> = ({
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onToggleMarketSuspend(match.id, market.id);
-                    }}
-                    className={`inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-semibold border transition-colors ${
-                      isMarketSuspended
-                        ? 'bg-[#F59E0B]/15 border-[#F59E0B]/50 text-[#F59E0B]'
-                        : 'bg-[#112631] border-[#1D3B4A] text-[#64748B] hover:text-white'
-                    }`}
-                    title="Toggle market suspension state"
-                  >
-                    {isMarketSuspended ? (
-                      <>
-                        <Unlock className="w-3 h-3" />
-                        <span>Unsuspend</span>
-                      </>
-                    ) : (
-                      <>
-                        <Lock className="w-3 h-3" />
-                        <span>Suspend</span>
-                      </>
-                    )}
-                  </button>
+                  {showJudgeControls && (
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        onToggleMarketSuspend(match.id, market.id);
+                      }}
+                      className={`inline-flex items-center gap-1 px-2 py-1 rounded text-[10px] font-semibold border transition-colors ${
+                        isMarketSuspended
+                          ? 'bg-[#F59E0B]/15 border-[#F59E0B]/50 text-[#F59E0B]'
+                          : 'bg-[#112631] border-[#1D3B4A] text-[#64748B] hover:text-white'
+                      }`}
+                      title="Toggle market suspension state"
+                    >
+                      {isMarketSuspended ? (
+                        <>
+                          <Unlock className="w-3 h-3" />
+                          <span>Unsuspend</span>
+                        </>
+                      ) : (
+                        <>
+                          <Lock className="w-3 h-3" />
+                          <span>Suspend</span>
+                        </>
+                      )}
+                    </button>
+                  )}
 
                   {isCollapsed ? (
                     <ChevronDown className="w-4 h-4 text-[#94A3B8]" />
